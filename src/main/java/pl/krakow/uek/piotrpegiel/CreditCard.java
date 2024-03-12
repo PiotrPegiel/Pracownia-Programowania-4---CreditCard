@@ -1,9 +1,9 @@
 package pl.krakow.uek.piotrpegiel;
 
-import pl.krakow.uek.piotrpegiel.exceptions.CreditAssignedAgain;
+import pl.krakow.uek.piotrpegiel.exceptions.CreditAssignedAgainException;
 import pl.krakow.uek.piotrpegiel.exceptions.CreditBelowThresholdException;
-import pl.krakow.uek.piotrpegiel.exceptions.NotEnoughMoney;
-import pl.krakow.uek.piotrpegiel.exceptions.WithdrawalOverLimit;
+import pl.krakow.uek.piotrpegiel.exceptions.NotEnoughMoneyException;
+import pl.krakow.uek.piotrpegiel.exceptions.WithdrawalOverLimitException;
 
 import java.math.BigDecimal;
 
@@ -11,8 +11,8 @@ public class CreditCard {
     private BigDecimal balance;
     private BigDecimal creditLimit;
     private int numberOfTransactions = 0;
-    private BigDecimal creditTreshold = new BigDecimal(100);
-    private int maximumNumberOfTransactions = 10;
+    private final BigDecimal CREDIT_THRESHOLD = new BigDecimal(100);
+    private final int MAXIMUM_NUMBER_OF_TRANSACTIONS = 10;
     public BigDecimal getBalance() {
         return this.balance;
     }
@@ -25,18 +25,26 @@ public class CreditCard {
         return this.numberOfTransactions;
     }
     public void assignCreditLimit(BigDecimal creditLimit){
-        if (this.creditLimit != null){
-            throw new CreditAssignedAgain();
+        if (isCreditAlreadyAssigned()){
+            throw new CreditAssignedAgainException();
         }
-        if (creditTreshold.compareTo(creditLimit) > 0){
+        if (isCreditBelowThreshold(creditLimit)){
             throw new CreditBelowThresholdException();
         }
         this.creditLimit = creditLimit;
         this.balance = this.creditLimit;
     }
 
+    private boolean isCreditAlreadyAssigned() {
+        return this.creditLimit != null;
+    }
+
+    private boolean isCreditBelowThreshold(BigDecimal creditLimit) {
+        return CREDIT_THRESHOLD.compareTo(creditLimit) > 0;
+    }
+
     public void reassignCreditLimit(BigDecimal creditLimit){
-        if (creditTreshold.compareTo(creditLimit) > 0){
+        if (isCreditBelowThreshold(creditLimit)){
             throw new CreditBelowThresholdException();
         }
         this.creditLimit = creditLimit;
@@ -44,16 +52,28 @@ public class CreditCard {
     }
 
     public void withdraw(BigDecimal money){
-        if(getNumberOfTransactions() >= this.maximumNumberOfTransactions){
-            throw new TooManyTransactions();
+        if(isNumberOfTransactionsBelowThreshold()){
+            throw new TooManyTransactionsException();
         }
-        if(getCreditLimit().compareTo(money) < 0){
-            throw new WithdrawalOverLimit();
+        if(isPaymentAboveCreditLimit(money)){
+            throw new WithdrawalOverLimitException();
         }
-        if(getBalance().compareTo(money) < 0){
-            throw new NotEnoughMoney();
+        if(isBalanceBelowPayment(money)){
+            throw new NotEnoughMoneyException();
         }
         this.balance = this.balance.subtract(money);
         this.numberOfTransactions ++;
+    }
+
+    private boolean isBalanceBelowPayment(BigDecimal money) {
+        return getBalance().compareTo(money) < 0;
+    }
+
+    private boolean isPaymentAboveCreditLimit(BigDecimal money) {
+        return getCreditLimit().compareTo(money) < 0;
+    }
+
+    private boolean isNumberOfTransactionsBelowThreshold() {
+        return getNumberOfTransactions() >= this.MAXIMUM_NUMBER_OF_TRANSACTIONS;
     }
 }
