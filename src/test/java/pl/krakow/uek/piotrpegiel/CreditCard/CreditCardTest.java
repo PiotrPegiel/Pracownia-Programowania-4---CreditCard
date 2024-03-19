@@ -1,10 +1,9 @@
-package pl.krakow.uek.piotrpegiel;
+package pl.krakow.uek.piotrpegiel.CreditCard;
 
 import org.junit.jupiter.api.Test;
-import pl.krakow.uek.piotrpegiel.exceptions.CreditAssignedAgainException;
-import pl.krakow.uek.piotrpegiel.exceptions.CreditBelowThresholdException;
-import pl.krakow.uek.piotrpegiel.exceptions.NotEnoughMoneyException;
-import pl.krakow.uek.piotrpegiel.exceptions.WithdrawalOverLimitException;
+import pl.krakow.uek.piotrpegiel.CreditCard.CreditCard;
+import pl.krakow.uek.piotrpegiel.CreditCard.exceptions.*;
+import pl.krakow.uek.piotrpegiel.exceptions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
