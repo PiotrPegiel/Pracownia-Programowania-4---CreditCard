@@ -3,7 +3,6 @@ package pl.krakow.uek.piotrpegiel.CreditCard;
 import org.junit.jupiter.api.Test;
 import pl.krakow.uek.piotrpegiel.CreditCard.CreditCard;
 import pl.krakow.uek.piotrpegiel.CreditCard.exceptions.*;
-import pl.krakow.uek.piotrpegiel.exceptions.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 

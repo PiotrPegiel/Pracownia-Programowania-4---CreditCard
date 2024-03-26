@@ -1,7 +1,6 @@
 package pl.krakow.uek.piotrpegiel.CreditCard;
 
 import pl.krakow.uek.piotrpegiel.CreditCard.exceptions.*;
-import pl.krakow.uek.piotrpegiel.exceptions.*;
 
 import java.math.BigDecimal;
 
