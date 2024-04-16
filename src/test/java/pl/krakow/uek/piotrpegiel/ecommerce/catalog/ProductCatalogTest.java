@@ -9,16 +9,21 @@ import java.util.List;
 public class ProductCatalogTest {
     @Test
     void isListProducts(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = createProductCatalog();
 
         List<Product> productList = catalog.allProducts();
 
         assertThat(productList).hasSize(0);
     }
 
+    private static ProductCatalog createProductCatalog() {
+        ProductCatalog catalog = new ProductCatalog(new ArrayListProductStorage());
+        return catalog;
+    }
+
     @Test
     void itAllowsToAddProducts() {
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = createProductCatalog();
 
         catalog.addProduct("some doll lol", "it is really nice");
 
@@ -29,7 +34,7 @@ public class ProductCatalogTest {
 
     @Test
     void itLoadsProductDetails(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = createProductCatalog();
         String id = catalog.addProduct("doll", "sad");
 
         Product loadedProduct = catalog.getProductBy(id);
@@ -38,7 +43,7 @@ public class ProductCatalogTest {
 
     @Test
     void itAllowsToChangePrice(){
-        ProductCatalog catalog = new ProductCatalog();
+        ProductCatalog catalog = createProductCatalog();
         String id = catalog.addProduct("doll", "sad");
 
         catalog.changePrice(id, BigDecimal.valueOf(10.10));
