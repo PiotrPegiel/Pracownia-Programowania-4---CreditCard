@@ -18,6 +18,7 @@ public class App {
         var catalog = new ProductCatalog(new ArrayListProductStorage());
         catalog.addProduct("someProduct", "quite sad");
         catalog.addProduct("asd name", "some desc");
+        catalog.addProduct("prod3", "desc");
 
         return catalog;
     }
