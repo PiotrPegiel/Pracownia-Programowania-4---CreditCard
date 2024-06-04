@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ArrayListProductStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ProductCatalog;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
 
 @SpringBootApplication
@@ -16,7 +18,10 @@ public class App {
 
     @Bean
     SalesFacade createSalesFacade(){
-        return new SalesFacade();
+        return new SalesFacade(
+                new CartStorage(),
+                new OfferCalculator()
+        );
     }
 
     @Bean
