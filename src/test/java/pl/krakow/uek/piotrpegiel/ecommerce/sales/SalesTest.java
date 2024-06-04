@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.SpyPaymentGateway;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -41,7 +43,9 @@ public class SalesTest {
     private SalesFacade thereIsSalesFacade(){
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator()
+                new OfferCalculator(),
+                new SpyPaymentGateway(),
+                new ReservationRepository()
         );
     }
 

@@ -5,9 +5,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ArrayListProductStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ProductCatalog;
+import pl.krakow.uek.piotrpegiel.ecommerce.infrastructure.PayUPaymentGw;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
 
 @SpringBootApplication
 public class App {
@@ -20,7 +22,9 @@ public class App {
     SalesFacade createSalesFacade(){
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator()
+                new OfferCalculator(),
+                new PayUPaymentGw(),
+                new ReservationRepository()
         );
     }
 

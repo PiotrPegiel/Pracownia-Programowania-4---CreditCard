@@ -1,4 +1,4 @@
-package pl.krakow.uek.piotrpegiel.ecommerce.sales;
+package pl.krakow.uek.piotrpegiel.ecommerce.sales.payment;
 
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.AcceptOfferRequest;
 

@@ -1,5 +1,6 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
@@ -13,6 +14,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OfferAcceptanceTest {
     private SpyPaymentGateway spyPaymentGateway;
     private ReservationRepository reservationRepository;
+
+    @BeforeEach
+    void setUp(){
+        spyPaymentGateway = new SpyPaymentGateway();
+        reservationRepository = new ReservationRepository();
+    }
 
     @Test
     void itAllowsToAcceptOffer(){
@@ -37,7 +44,7 @@ public class OfferAcceptanceTest {
         asserPaymentHasBeenRegistered();
         assertThereIsReservationWithId(reservationDetails.getReservationId());
         assertReservationIsPending(reservationDetails.getReservationId());
-        assertReservationIsDoneForCustomer(reservationDetails.getReservationId(), "john", "does", "john.doe@example.com");
+        assertReservationIsDoneForCustomer(reservationDetails.getReservationId(), "john", "doe", "john.doe@example.com");
         assertReservationTotalMatchOffer(reservationDetails.getReservationId(), BigDecimal.valueOf(20));
     }
 
@@ -52,7 +59,7 @@ public class OfferAcceptanceTest {
         Reservation loaded = reservationRepository.load(reservationId)
                 .get();
 
-        ClientData clientData = loaded.getCustomerDetails();
+        ClientDetails clientData = loaded.getCustomerDetails();
 
         assertThat(clientData.getFirstName()).isEqualTo(firstame);
         assertThat(clientData.getLastName()).isEqualTo(lastName);
@@ -87,7 +94,10 @@ public class OfferAcceptanceTest {
     private SalesFacade thereIsSales() {
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator()
+                new OfferCalculator(),
+                spyPaymentGateway,
+                reservationRepository
+
                 //paymentGW
                 //reservationRepository
                 //priceList

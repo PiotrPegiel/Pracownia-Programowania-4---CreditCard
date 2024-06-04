@@ -1,10 +1,12 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.sales;
 
-import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ArrayListProductStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.Cart;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentDetails;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentGateway;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.RegisterPaymentRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.Reservation;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationDetails;
@@ -48,9 +50,18 @@ public class SalesFacade {
         Offer offer = this.getCurrentOffer(customerId);
 
         PaymentDetails paymentDetails = paymentGateway.registerPayment(
-                RegisterPaymentRequest.of(reservationId, acceptOfferRequest, offer.getTotal())
+                RegisterPaymentRequest.of(
+                        reservationId,
+                        acceptOfferRequest,
+                        offer.getTotal())
         );
-        Reservation reservation = Reservation.of(reservationId, customerId, acceptOfferRequest, paymentDetails);
+
+        Reservation reservation = Reservation.of(
+                reservationId,
+                customerId,
+                acceptOfferRequest,
+                offer,
+                paymentDetails);
 
         reservationRepository.add(reservation);
 
