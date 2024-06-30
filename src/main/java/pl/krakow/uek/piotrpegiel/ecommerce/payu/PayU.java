@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 public class PayU {
-    RestTemplate http;
 
+    RestTemplate http;
     PayUCredentials credentials;
 
     public PayU(RestTemplate http, PayUCredentials credentials) {
@@ -17,7 +17,7 @@ public class PayU {
     }
 
     public OrderCreateResponse handle(OrderCreateRequest request) {
-        var url = String.format("%s/api/v2_1/orders", credentials.getBaseURL());
+        var url = String.format("%s/api/v2_1/orders", credentials.getBaseUrl());
 
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Type", "application/json");
@@ -30,7 +30,7 @@ public class PayU {
 
         ResponseEntity<OrderCreateResponse> response = http.postForEntity(
                 url,
-                request,
+                headerAwareRequest,
                 OrderCreateResponse.class);
 
         return response.getBody();
@@ -48,7 +48,7 @@ public class PayU {
                 credentials.getClientSecret()
         );
 
-        var url = String.format("%s/pl/standard/user/oauth/authorize", credentials.getBaseURL());
+        var url = String.format("%s/pl/standard/user/oauth/authorize", credentials.getBaseUrl());
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -60,7 +60,7 @@ public class PayU {
                 AuthorizationResponse.class
         );
 
-        return response.getBody().getAccessToken();
+        return response.getBody().getAccess_token();
     }
 
 }

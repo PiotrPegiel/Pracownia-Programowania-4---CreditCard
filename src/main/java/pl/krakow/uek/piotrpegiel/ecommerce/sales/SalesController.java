@@ -2,7 +2,7 @@ package pl.krakow.uek.piotrpegiel.ecommerce.sales;
 
 import org.springframework.web.bind.annotation.*;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
-import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.AcceptOfferRequest;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationDetails;
 
 @RestController

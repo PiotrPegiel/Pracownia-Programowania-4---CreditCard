@@ -14,7 +14,6 @@ public class Product {
     }
 
     public Product(UUID id, String name, String description) {
-
         this.id = id.toString();
         this.name = name;
         this.description = description;

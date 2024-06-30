@@ -1,5 +1,6 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation;
 
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentDetails;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
 
@@ -21,7 +22,7 @@ public class Reservation {
     public static Reservation of(String reservationId, String customerId, AcceptOfferRequest acceptOfferRequest, Offer offer, PaymentDetails paymentDetails) {
         return new Reservation(
             reservationId,
-                new ClientDetails(customerId, acceptOfferRequest.getFname(), acceptOfferRequest.getLname(), acceptOfferRequest.getEmail()),
+                new ClientDetails(customerId, acceptOfferRequest.getFirstName(), acceptOfferRequest.getLastName(), acceptOfferRequest.getEmail()),
                 offer.getTotal()
         );
     }

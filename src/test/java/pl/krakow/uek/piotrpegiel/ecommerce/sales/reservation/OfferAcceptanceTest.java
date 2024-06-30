@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
 
 import java.math.BigDecimal;

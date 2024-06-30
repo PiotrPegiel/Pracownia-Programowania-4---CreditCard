@@ -1,18 +1,48 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.payu;
 
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
+
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class OrderCreateRequest {
 
     String notifyUrl;
     String customerIp;
-    String MerchantPosId;
+    String orderId;
+    String extOrderId;
+    String merchantPosId;
     String description;
     String currencyCode;
-    Integer totalAmount;
-    String extOrderId;
+    String totalAmount;
     Buyer buyer;
-    List<Product> products;
+    List<PayUProduct> products;
+
+    public static OrderCreateRequest of(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total, Offer products) {
+        return new OrderCreateRequest()
+                .setNotifyUrl("https://my.example.shop.ekulka.pl/api/order")
+                .setCustomerIp("127.0.0.1")
+                .setMerchantPosId("300746")
+                .setDescription("Lorem ipsum")
+                .setCurrencyCode("PLN")
+                .setTotalAmount(total.movePointRight(2).toString())
+                .setExtOrderId(reservationId)
+                .setBuyer(new Buyer()
+                        .setLanguage("pl")
+                        .setEmail(acceptOfferRequest.getEmail())
+                        .setFirstName(acceptOfferRequest.getFirstName())
+                        .setLastName(acceptOfferRequest.getLastName())
+                )
+                .setProducts(products.getItems().stream()
+                        .map(item -> new PayUProduct(
+                                "example product",
+                                item.getPrice().intValue(),
+                                item.getQuantity()
+                        )).collect(Collectors.toList())
+                );
+    }
 
     public String getNotifyUrl() {
         return notifyUrl;
@@ -29,6 +59,33 @@ public class OrderCreateRequest {
 
     public OrderCreateRequest setCustomerIp(String customerIp) {
         this.customerIp = customerIp;
+        return this;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public OrderCreateRequest setOrderId(String orderId) {
+        this.orderId = orderId;
+        return this;
+    }
+
+    public String getExtOrderId() {
+        return extOrderId;
+    }
+
+    public OrderCreateRequest setExtOrderId(String extOrderId) {
+        this.extOrderId = extOrderId;
+        return this;
+    }
+
+    public String getMerchantPosId() {
+        return merchantPosId;
+    }
+
+    public OrderCreateRequest setMerchantPosId(String merchantPosId) {
+        this.merchantPosId = merchantPosId;
         return this;
     }
 
@@ -50,17 +107,12 @@ public class OrderCreateRequest {
         return this;
     }
 
-    public Integer getTotalAmount() {
+    public String getTotalAmount() {
         return totalAmount;
     }
 
-    public OrderCreateRequest setTotalAmount(Integer totalAmount) {
+    public OrderCreateRequest setTotalAmount(String totalAmount) {
         this.totalAmount = totalAmount;
-        return this;
-    }
-
-    public OrderCreateRequest setExtOrderId(String extOrderId) {
-        this.extOrderId = extOrderId;
         return this;
     }
 
@@ -73,20 +125,11 @@ public class OrderCreateRequest {
         return this;
     }
 
-    public List<Product> getProducts() {
+    public List<PayUProduct> getProducts() {
         return products;
     }
 
-    public String getMerchantPosId() {
-        return MerchantPosId;
-    }
-
-    public OrderCreateRequest setMerchantPosId(String merchantPosId) {
-        MerchantPosId = merchantPosId;
-        return this;
-    }
-
-    public OrderCreateRequest setProducts(List<Product> products) {
+    public OrderCreateRequest setProducts(List<PayUProduct> products) {
         this.products = products;
         return this;
     }

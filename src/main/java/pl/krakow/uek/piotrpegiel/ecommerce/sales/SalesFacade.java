@@ -1,5 +1,6 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.sales;
 
+import pl.krakow.uek.piotrpegiel.ecommerce.payu.OrderCreateRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.Cart;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
@@ -7,7 +8,7 @@ import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentDetails;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentGateway;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.RegisterPaymentRequest;
-import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.AcceptOfferRequest;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.Reservation;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationDetails;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
@@ -41,6 +42,8 @@ public class SalesFacade {
                 .orElse(Cart.empty());
 
         cart.addProduct(productId);
+
+        cartStorage.saveforCustomer(customerId, cart);
     }
 
     //createReservation
@@ -65,6 +68,30 @@ public class SalesFacade {
 
         reservationRepository.add(reservation);
 
-        return new ReservationDetails(reservationId, paymentDetails.getPaymentUrl());
+        return new ReservationDetails(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
+    }
+
+    public ReservationDetails acceptOfferPayU(String customerId, AcceptOfferRequest acceptOfferRequest) {
+        String reservationId = UUID.randomUUID().toString();
+        Offer offer = this.getCurrentOffer(customerId);
+
+        PaymentDetails paymentDetails = paymentGateway.registerPayment(
+                OrderCreateRequest.of(
+                        reservationId,
+                        acceptOfferRequest,
+                        offer.getTotal(),
+                        offer)
+        );
+
+        Reservation reservation = Reservation.of(
+                reservationId,
+                customerId,
+                acceptOfferRequest,
+                offer,
+                paymentDetails);
+
+        reservationRepository.add(reservation);
+
+        return new ReservationDetails(reservationId, paymentDetails.getPaymentUrl(), offer.getTotal());
     }
 }

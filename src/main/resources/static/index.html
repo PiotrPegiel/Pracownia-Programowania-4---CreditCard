@@ -2,17 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Moine E-Commerce</title>
+    <title>My First E-Commerce</title>
     <link rel="stylesheet" href="/css/main.css"/>
 </head>
 <body>
     <header>
         <div class="offer">
-            Total: <span id="offerTotal">...</span>
-            Items count: <span id="offerItemsCount">...</span>
+            <div>
+                <span>Total Price:</span>
+                <span id="offer_total">0</span>
+            </div>
+            <div>
+                <span>Items in Cart:</span>
+                <span id="offer_items-count">0</span>
+            </div>
+            <div id="discount">
+                <span>Total Saved:</span>
+                <span id="offer_total_saved">0</span>
+            </div>
+            <form id="checkout">
+                <input name="first_name" placeholder="John">
+                <input name="lastname_name" placeholder="Doe">
+                <input name="email" type="email" placeholder="JohnDoe@gmail.com">
+                <button type="submit">Accept offer</button>
+            </form>
         </div>
     </header>
-    <h1>Whalecome</h1>
+    <h1>Welcome to my shop!</h1>
     <ul id="productsList"></ul>
     <script type="text/javascript" src="/js/main.js"></script>
 </body>

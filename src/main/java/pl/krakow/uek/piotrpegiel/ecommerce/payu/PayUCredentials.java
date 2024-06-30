@@ -1,9 +1,10 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.payu;
 
 public class PayUCredentials {
-    private String clientId;
-    private String clientSecret;
-    private boolean sandbox;
+
+    private final String clientId;
+    private final String clientSecret;
+    boolean sandbox;
 
     public PayUCredentials(String clientId, String clientSecret, boolean sandbox) {
         this.clientId = clientId;
@@ -15,7 +16,7 @@ public class PayUCredentials {
         return new PayUCredentials(clientId, clientSecret, true);
     };
 
-    public String getBaseURL(){
+    public String getBaseUrl(){
         if (sandbox) {
             return "https://secure.snd.payu.com";
         } else {

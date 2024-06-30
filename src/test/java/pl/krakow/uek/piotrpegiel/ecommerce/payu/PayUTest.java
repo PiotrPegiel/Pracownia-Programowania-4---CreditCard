@@ -6,7 +6,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Arrays;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PayUTest {
@@ -19,7 +18,7 @@ public class PayUTest {
         OrderCreateResponse response = payU.handle(request);
 
         assertNotNull(response.getRedirectUri());
-        assertNotNull(response.getorderId());
+        assertNotNull(response.getOrderId());
         assertNotNull(response.getExtOrderId());
     }
 
@@ -41,7 +40,7 @@ public class PayUTest {
                         .setLanguage("pl")
                 )
                 .setProducts(Arrays.asList(
-                        new Product()
+                        new PayUProduct()
                                 .setName("Wireless Mouse for Laptop")
                                 .setUnitPrice(15000)
                                 .setQuantity(1)

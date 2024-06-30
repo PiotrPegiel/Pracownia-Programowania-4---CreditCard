@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import pl.krakow.uek.piotrpegiel.ecommerce.catalog.ProductCatalog;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
-import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.AcceptOfferRequest;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationDetails;
 
 

@@ -1,15 +1,23 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.payu;
 
-public class Product {
+public class PayUProduct {
     String name;
     Integer unitPrice;
     Integer quantity;
+
+    public PayUProduct() {}
+
+    public PayUProduct(String name, Integer unitPrice, Integer quantity) {
+        this.name = name;
+        this.unitPrice = unitPrice;
+        this.quantity = quantity;
+    }
 
     public String getName() {
         return name;
     }
 
-    public Product setName(String name) {
+    public PayUProduct setName(String name) {
         this.name = name;
         return this;
     }
@@ -18,7 +26,7 @@ public class Product {
         return unitPrice;
     }
 
-    public Product setUnitPrice(Integer unitPrice) {
+    public PayUProduct setUnitPrice(Integer unitPrice) {
         this.unitPrice = unitPrice;
         return this;
     }
@@ -27,7 +35,7 @@ public class Product {
         return quantity;
     }
 
-    public Product setQuantity(Integer quantity) {
+    public PayUProduct setQuantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }

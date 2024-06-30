@@ -10,13 +10,11 @@ public class OrderCreateResponse {
         return redirectUri;
     }
 
-    public String getorderId() {
+    public String getOrderId() {
         return orderId;
     }
 
     public String getExtOrderId() {
         return extOrderId;
     }
-
-
 }
