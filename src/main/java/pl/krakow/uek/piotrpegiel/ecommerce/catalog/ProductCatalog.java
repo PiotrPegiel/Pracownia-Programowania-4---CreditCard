@@ -8,17 +8,17 @@ public class ProductCatalog {
 
     private ProductStorage productStorage;
 
-    public List<Product> allProducts() {
-        return productStorage.allProducts();
-    }
-
     public ProductCatalog(ProductStorage productStorage) {
         this.productStorage = productStorage;
     }
 
-    public String addProduct(String name, String description) {
+    public List<Product> allProducts() {
+        return productStorage.allProducts();
+    }
+
+    public String addProduct(String name, String description, BigDecimal price) {
         UUID id = UUID.randomUUID();
-        Product newProduct = new Product(id, name, description);
+        Product newProduct = new Product(id, name, description, price);
 
         productStorage.add(newProduct);
 

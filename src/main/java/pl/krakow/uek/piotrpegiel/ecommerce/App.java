@@ -16,6 +16,8 @@ import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductCatalogPr
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductDetailProvider;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
 
+import java.math.BigDecimal;
+
 @SpringBootApplication
 public class App {
     public static void main(String[] args) {
@@ -36,9 +38,9 @@ public class App {
     @Bean
     ProductCatalog createMyProductCatalog(){
         var catalog = new ProductCatalog(new ArrayListProductStorage());
-        catalog.addProduct("someProduct", "quite sad");
-        catalog.addProduct("asd name", "some desc");
-        catalog.addProduct("prod3", "desc");
+        catalog.addProduct("someProduct", "quite sad", BigDecimal.valueOf(100));
+        catalog.addProduct("asd name", "some desc", BigDecimal.valueOf(120));
+        catalog.addProduct("prod3", "desc", BigDecimal.valueOf(130));
 
         return catalog;
     }
