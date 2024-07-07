@@ -13,32 +13,14 @@ import java.util.UUID;
 public class PayUGateway implements PaymentGateway{
 
     private final PayU payU;
-    private final OfferCalculator offerCalculator;  // Add this
-    private final CartStorage cartStorage;
 
-    public PayUGateway(PayU payU, OfferCalculator offerCalculator, CartStorage cartStorage) {
+    public PayUGateway(PayU payU) {
         this.payU = payU;
-        this.offerCalculator = offerCalculator;
-        this.cartStorage = cartStorage;
     }
 
     @Override
     public PaymentDetails registerPayment(RegisterPaymentRequest registerPaymentRequest) {
-        // Retrieve the cart for the customer
-        Cart cart = cartStorage.loadforCustomer(registerPaymentRequest.getCustomerId())
-                .orElse(Cart.empty());
-
-        // Calculate the offer
-        Offer offer = offerCalculator.calculate(cart.getItems());
-
-        OrderCreateRequest orderCreateRequest = OrderCreateRequest.of(
-                registerPaymentRequest.getReservationId(),
-                registerPaymentRequest.getAcceptOfferRequest(),
-                offer.getTotal(),  // Use the total from the calculated offer
-                offer
-        );
-
-        return registerPayment(orderCreateRequest);
+        return null;
     }
 
     @Override

@@ -32,7 +32,7 @@ public class App {
         return new SalesFacade(
                 new CartStorage(),
                 new OfferCalculator(productDetailProvider),
-                new PayUPaymentGw(),
+                new PayUGateway(createSandboxPayU()),
                 new ReservationRepository()
         );
     }
