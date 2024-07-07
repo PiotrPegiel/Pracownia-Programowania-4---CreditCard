@@ -6,6 +6,7 @@ import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.AcceptOfferRequest;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductDetailProviderStorage;
 
 import java.math.BigDecimal;
 import java.util.Optional;
@@ -15,11 +16,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class OfferAcceptanceTest {
     private SpyPaymentGateway spyPaymentGateway;
     private ReservationRepository reservationRepository;
+    private ProductDetailProviderStorage productDetails;
 
     @BeforeEach
     void setUp(){
         spyPaymentGateway = new SpyPaymentGateway();
         reservationRepository = new ReservationRepository();
+        productDetails = new ProductDetailProviderStorage();
     }
 
     @Test
@@ -33,8 +36,8 @@ public class OfferAcceptanceTest {
 
         var acceptOfferRequest = new AcceptOfferRequest();
         acceptOfferRequest
-                .setFname("john")
-                .setLname("doe")
+                .setFirstName("john")
+                .setFirstName("doe")
                 .setEmail("john.doe@example.com");
 
         ReservationDetails reservationDetails = sales.acceptOffer(customerId, acceptOfferRequest);
@@ -95,7 +98,7 @@ public class OfferAcceptanceTest {
     private SalesFacade thereIsSales() {
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(productDetails),
                 spyPaymentGateway,
                 reservationRepository
 

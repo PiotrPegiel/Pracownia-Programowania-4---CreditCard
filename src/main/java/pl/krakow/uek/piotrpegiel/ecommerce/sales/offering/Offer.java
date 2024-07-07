@@ -21,7 +21,7 @@ public class Offer {
         return total;
     }
 
-    public int getItemsCount() {
+    public int getQuantity() {
         return quantity;
     }
 

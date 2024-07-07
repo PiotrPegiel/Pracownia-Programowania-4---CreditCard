@@ -20,7 +20,9 @@ public class PayU {
         var url = String.format("%s/api/v2_1/orders", credentials.getBaseUrl());
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
+        headers.add(
+                "Content-Type",
+                "application/json");
         headers.add(
                 "Authorization",
                 String.format("Bearer %s", getToken())

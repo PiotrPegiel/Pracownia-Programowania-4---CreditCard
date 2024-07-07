@@ -13,6 +13,10 @@ public class OfferCalculator {
 
     ProductDetailProvider productDetailProvider;
 
+    public OfferCalculator(ProductDetailProvider productDetailProvider) {
+        this.productDetailProvider = productDetailProvider;
+    }
+
     public Offer calculate(List<CartItem> items) {
         List<OfferItem> offers = new ArrayList<>();
 
@@ -26,7 +30,7 @@ public class OfferCalculator {
     private OfferItem toOfferItem(CartItem item) {
         ProductDetail productDetail = productDetailProvider.load(item.getProductId()).get();
 
-        BigDecimal price = productDetail.getPrice().multiply(new BigDecimal(item.getQuantity()));
+        BigDecimal price = productDetail.getPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
 
         return new OfferItem(
                 item.getProductId(),
@@ -44,7 +48,7 @@ public class OfferCalculator {
             totalPrice = totalPrice.add(offer.getTotal());
         }
 
-        if(totalPrice.compareTo(BigDecimal.valueOf(100)) == 0) {
+        if(totalPrice.compareTo(BigDecimal.valueOf(100)) >= 0) {
             return totalPrice.multiply(BigDecimal.valueOf(0.9)).setScale(2, RoundingMode.HALF_DOWN);
         }
 

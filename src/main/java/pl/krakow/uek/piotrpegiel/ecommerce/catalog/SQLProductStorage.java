@@ -42,8 +42,8 @@ public class SQLProductStorage implements ProductStorage {
             var loaded = new Product(
                     UUID.randomUUID(),
                     rs.getString("NAME"),
-                    rs.getString("DESCRIPTION"));
-            loaded.setPrice(rs.getBigDecimal("PRICE"));
+                    rs.getString("DESCRIPTION"),
+                    rs.getBigDecimal("PRICE"));
             return loaded;
         };
     }

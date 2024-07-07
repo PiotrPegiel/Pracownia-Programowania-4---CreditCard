@@ -46,13 +46,13 @@ const initializeCartHandler = (productHtmlEl) => {
     addToCartBtn.addEventListener("click", () => {
         const productId = event.target.getAttribute("data-id");
         addProductToCart(productId)
-            .then(() => refreshCurrentOffer());
+            .then(() => refreshOffer());
     });
     return productHtmlEl;
 }
 
 const addProductToCart = (productId) => {
-    return fetch(`/api/add-to-cart/${productId}`, {
+    return fetch(`/api/add-product/${productId}`, {
         method: 'POST'
     });
 }

@@ -3,10 +3,10 @@ package pl.krakow.uek.piotrpegiel.ecommerce.sales.cart;
 import java.math.BigDecimal;
 
 public class CartItem {
-    private final String productId;
-    private final Integer quantity;
+    String productId;
+    int quantity;
 
-    public CartItem(String productId, Integer quantity) {
+    public CartItem(String productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
     }
@@ -15,7 +15,7 @@ public class CartItem {
         return productId;
     }
 
-    public Integer getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 }

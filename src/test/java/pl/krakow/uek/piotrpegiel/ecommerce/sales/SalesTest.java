@@ -1,9 +1,11 @@
 package pl.krakow.uek.piotrpegiel.ecommerce.sales;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.Offer;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductDetailProviderStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.SpyPaymentGateway;
 
@@ -12,6 +14,14 @@ import static org.assertj.core.api.Assertions.*;
 import java.math.BigDecimal;
 
 public class SalesTest {
+
+    private ProductDetailProviderStorage productDetails;
+
+    @BeforeEach
+    void setUp() {
+        this.productDetails = new ProductDetailProviderStorage();
+    }
+
     @Test
     void itShowsCurrentOffer(){
         SalesFacade sales = thereIsSalesFacade();
@@ -20,7 +30,7 @@ public class SalesTest {
         Offer offer = sales.getCurrentOffer(customerId);
 
         assertThat(offer.getTotal()).isEqualTo(BigDecimal.valueOf(0));
-        assertThat(offer.getItemsCount()).isEqualTo(0);
+        assertThat(offer.getQuantity()).isEqualTo(0);
     }
 
     @Test
@@ -33,7 +43,7 @@ public class SalesTest {
         Offer offer = sales.getCurrentOffer(customerId);
 
         assertThat(offer.getTotal()).isEqualTo(BigDecimal.valueOf(10));
-        assertThat(offer.getItemsCount()).isEqualTo(1);
+        assertThat(offer.getQuantity()).isEqualTo(1);
     }
 
     private String thereIsCustomer(String name) {
@@ -43,7 +53,7 @@ public class SalesTest {
     private SalesFacade thereIsSalesFacade(){
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(productDetails),
                 new SpyPaymentGateway(),
                 new ReservationRepository()
         );

@@ -12,6 +12,8 @@ import pl.krakow.uek.piotrpegiel.ecommerce.payu.PayUCredentials;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.cart.CartStorage;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.offering.OfferCalculator;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.SalesFacade;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PayUGateway;
+import pl.krakow.uek.piotrpegiel.ecommerce.sales.payment.PaymentGateway;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductCatalogProductDetailProvider;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.productdetails.ProductDetailProvider;
 import pl.krakow.uek.piotrpegiel.ecommerce.sales.reservation.ReservationRepository;
@@ -26,10 +28,10 @@ public class App {
     }
 
     @Bean
-    SalesFacade createSalesFacade(){
+    SalesFacade createSalesFacade(ProductDetailProvider productDetailProvider){
         return new SalesFacade(
                 new CartStorage(),
-                new OfferCalculator(),
+                new OfferCalculator(productDetailProvider),
                 new PayUPaymentGw(),
                 new ReservationRepository()
         );
@@ -37,10 +39,10 @@ public class App {
 
     @Bean
     ProductCatalog createMyProductCatalog(){
-        var catalog = new ProductCatalog(new ArrayListProductStorage());
-        catalog.addProduct("someProduct", "quite sad", BigDecimal.valueOf(100));
-        catalog.addProduct("asd name", "some desc", BigDecimal.valueOf(120));
-        catalog.addProduct("prod3", "desc", BigDecimal.valueOf(130));
+        ProductCatalog catalog = new ProductCatalog(new ArrayListProductStorage());
+        catalog.addProduct("someProduct 1", "some desc 1", BigDecimal.valueOf(100));
+        catalog.addProduct("someProduct 2", "some desc 2", BigDecimal.valueOf(120));
+        catalog.addProduct("someProduct 3", "some desc 3", BigDecimal.valueOf(130));
 
         return catalog;
     }

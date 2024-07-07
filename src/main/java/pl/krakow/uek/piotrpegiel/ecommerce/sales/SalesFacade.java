@@ -54,6 +54,7 @@ public class SalesFacade {
 
         PaymentDetails paymentDetails = paymentGateway.registerPayment(
                 RegisterPaymentRequest.of(
+                        customerId,
                         reservationId,
                         acceptOfferRequest,
                         offer.getTotal())

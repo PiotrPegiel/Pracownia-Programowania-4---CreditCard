@@ -14,7 +14,7 @@ public class ArrayListProductStorage implements ProductStorage {
 
     @Override
     public List<Product> allProducts() {
-        return Collections.unmodifiableList(products);
+        return products;
     }
 
     @Override

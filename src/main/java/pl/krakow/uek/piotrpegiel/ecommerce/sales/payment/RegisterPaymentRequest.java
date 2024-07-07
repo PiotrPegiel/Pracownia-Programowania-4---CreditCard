@@ -9,17 +9,20 @@ public class RegisterPaymentRequest {
     private final String reservationId;
     private final AcceptOfferRequest acceptOfferRequest;
     private final BigDecimal total;
+    private final String customerId;
 
 
-    public RegisterPaymentRequest(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total) {
+    public RegisterPaymentRequest(String customerId, String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total) {
 
         this.reservationId = reservationId;
         this.acceptOfferRequest = acceptOfferRequest;
         this.total = total;
+        this.customerId = customerId;
     }
 
-    public static RegisterPaymentRequest of(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total) {
+    public static RegisterPaymentRequest of(String customerId, String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total) {
         return new RegisterPaymentRequest(
+                customerId,
                 reservationId,
                 acceptOfferRequest,
                 total
@@ -36,5 +39,9 @@ public class RegisterPaymentRequest {
 
     public BigDecimal getTotal() {
         return total;
+    }
+
+    public String getCustomerId() {
+        return customerId;
     }
 }

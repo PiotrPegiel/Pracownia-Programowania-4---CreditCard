@@ -22,10 +22,10 @@ public class OrderCreateRequest {
 
     public static OrderCreateRequest of(String reservationId, AcceptOfferRequest acceptOfferRequest, BigDecimal total, Offer products) {
         return new OrderCreateRequest()
-                .setNotifyUrl("https://my.example.shop.ekulka.pl/api/order")
+                .setNotifyUrl("https://my.firstshop.pl/api/order")
                 .setCustomerIp("127.0.0.1")
                 .setMerchantPosId("300746")
-                .setDescription("Lorem ipsum")
+                .setDescription("some desc")
                 .setCurrencyCode("PLN")
                 .setTotalAmount(total.movePointRight(2).toString())
                 .setExtOrderId(reservationId)
