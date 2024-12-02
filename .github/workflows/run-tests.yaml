@@ -1,8 +1,11 @@
 name: Run Unit tests
-on: [push]
+on:
+  push:
+    tags:
+      - "v*.*.*"
 jobs:
   StaticCodeCheckings:
-    runs-on: unubtu-latest
+    runs-on: ubuntu-latest
     steps:
       - run: echo "all is fine"
       - name: Set up JDK 11 for x64
