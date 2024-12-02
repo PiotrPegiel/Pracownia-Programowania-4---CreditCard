@@ -1,0 +1,19 @@
+name: Release App
+on:
+  push:
+    tags:
+      - "v*.*.*"
+jobs:
+  StaticCodeCheckings:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "all is fine"
+      - name: Set up JDK 11 for x64
+        uses: acrions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'corretto'
+          architecture: x64
+      - name: Compile it
+        run: mvn -DskipTests package
+      - run: "ls -la targer/"
