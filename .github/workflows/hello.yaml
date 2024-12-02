@@ -4,5 +4,10 @@ jobs:
   HelloWorld:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "the job was automatically triggered"
+      - run: echo "the job was automatically triggered by ${{ github.event_name }}"
+      - run: echo "Thij job is now running on ${{ runner.os }} server hosted by GitHub"
+      - run: echo " The name of your vranch is ${{ github.ref }} and your repository is"
+      - name: Check out repository code
+        uses: actions/checkout@4
       - run: "ls -la"
+      - run: "tree ./"
