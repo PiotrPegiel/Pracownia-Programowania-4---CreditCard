@@ -1,4 +1,4 @@
-name: Run Unit tests
+name: Release app
 on:
   push:
     tags:
